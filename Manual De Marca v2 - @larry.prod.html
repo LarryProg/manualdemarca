@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 110'><text y='95' font-size='90'>🎼</text></svg>">
+<title>Manual de Marca Personal — Artista Independiente - @larry.prod</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET & BASE ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0e0e0e;
+  --bg2:      #161616;
+  --bg3:      #1f1f1f;
+  --fg:       #f0ede6;
+  --fg-dim:   rgba(240,237,230,0.55);
+  --fg-faint: rgba(240,237,230,0.28);
+  --border:   rgba(240,237,230,0.1);
+  --border2:  rgba(240,237,230,0.18);
+  --gold:     #c9a85c;
+  --white:    #ffffff;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Barlow', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Grain texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.25;
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────── */
+.progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 3px;
+  background: var(--fg);
+  width: 0%;
+  z-index: 999;
+  transition: width .1s linear;
+}
+
+/* ── COVER ────────────────────────────────────────── */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 64px 64px 72px;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.cover-logo {
+  position: absolute;
+  top: 52px; left: 60px;
+  width: 90px;
+  opacity: 1;
+  mix-blend-mode: screen;
+}
+
+.cover-vol {
+  position: absolute;
+  top: 56px; right: 64px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.cover-type {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp .5s .1s forwards;
+}
+
+.cover h1 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(64px, 12vw, 148px);
+  font-weight: 900;
+  color: var(--fg);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeUp .65s .22s forwards;
+}
+
+.cover h1 .line2 {
+  display: block;
+  color: rgba(240,237,230,0.3);
+}
+
+.cover h1 .line3 {
+  display: block;
+  -webkit-text-stroke: 2px var(--fg);
+  color: transparent;
+}
+
+.cover-desc {
+  max-width: 480px;
+  color: var(--fg-dim);
+  font-size: 13px;
+  line-height: 1.65;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp .55s .38s forwards;
+  border-left: 2px solid var(--border2);
+  padding-left: 18px;
+}
+
+.cover-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp .55s .5s forwards;
+}
+
+.cover-toc a {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  transition: background .2s, border-color .2s, color .2s;
+}
+
+.cover-toc a:hover {
+  background: rgba(240,237,230,0.05);
+  border-color: var(--border2);
+  color: var(--fg);
+}
+
+/* ── SECTION DIVIDERS ─────────────────────────────── */
+.section-div {
+  background: #000;
+  padding: 80px 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.section-div-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.section-div-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+.section-div-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 160px;
+  font-weight: 900;
+  color: rgba(240,237,230,0.04);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  position: absolute;
+  right: 40px;
+  bottom: -20px;
+}
+
+/* ── CHAPTERS ─────────────────────────────────────── */
+.chapter {
+  padding: 72px 64px;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .45s ease, transform .45s ease;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.chapter.visible { opacity: 1; transform: translateY(0); }
+
+.ch-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ch-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  max-width: 50px;
+}
+
+.chapter h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
+  color: var(--fg);
+  margin-bottom: 28px;
+}
+
+.chapter h3 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg);
+  margin: 40px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.chapter p {
+  color: var(--fg-dim);
+  font-size: 15px;
+  line-height: 1.72;
+  margin-bottom: 16px;
+}
+
+.chapter p strong { color: var(--fg); font-weight: 600; }
+
+/* ── RULE BOX ─────────────────────────────────────── */
+.rule-box {
+  background: var(--fg);
+  color: #000;
+  padding: 28px 32px 22px;
+  margin: 28px 0;
+  position: relative;
+}
+
+.rule-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: #000;
+}
+
+.rule-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+  margin-top: 14px;
+  display: block;
+}
+
+/* ── COMPANION BANNER ─────────────────────────────── */
+.companion-banner {
+  background: var(--bg2);
+  border-left: 3px solid var(--fg);
+  padding: 20px 24px;
+  margin: 24px 0;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.companion-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+
+.companion-body { flex: 1; }
+
+.companion-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 6px;
+}
+
+.companion-text {
+  font-size: 13px;
+  color: var(--fg-dim);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.companion-text strong { color: var(--fg); }
+
+/* ── CARDS ────────────────────────────────────────── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1px;
+  margin: 20px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.card {
+  background: var(--bg2);
+  padding: 22px;
+  transition: background .18s;
+}
+
+.card:hover { background: var(--bg3); }
+
+.card-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 10px;
+}
+
+.card h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--fg);
+  margin-bottom: 8px;
+}
+
+.card p { font-size: 13px; color: var(--fg-dim); margin: 0; line-height: 1.55; }
+
+/* ── PILLS ────────────────────────────────────────── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0; }
+
+.pill {
+  padding: 4px 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.pill.pain { background: rgba(180,50,30,0.12); border-color: rgba(180,50,30,0.4); color: #e08070; }
+.pill.desire { background: rgba(40,100,60,0.12); border-color: rgba(40,100,60,0.4); color: #70c090; }
+.pill.neutral { background: var(--bg2); border-color: var(--border2); color: var(--fg-dim); }
+
+/* ── CHECKLIST ────────────────────────────────────── */
+.checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 16px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-dim);
+  cursor: pointer;
+  transition: background .14s;
+  user-select: none;
+}
+
+.checklist li:hover { background: var(--bg3); }
+
+.checklist li.checked {
+  background: rgba(40,100,60,0.08);
+  color: var(--fg-faint);
+  text-decoration: line-through;
+  text-decoration-color: var(--fg-faint);
+}
+
+.check-box {
+  width: 17px; height: 17px;
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: transparent;
+  transition: background .14s, border-color .14s;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+}
+
+.checklist li.checked .check-box {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: #000;
+}
+
+/* ── EXERCISE ─────────────────────────────────────── */
+.exercise {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--fg);
+  padding: 24px 28px;
+  margin: 28px 0;
+}
+
+.exercise-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 12px;
+}
+
+.exercise h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin-bottom: 14px;
+  letter-spacing: 0.03em;
+}
+
+.exercise-questions {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 14px;
+  background: var(--border);
+}
+
+.exercise-questions li {
+  padding: 12px 16px;
+  background: var(--bg);
+  font-size: 13px;
+  color: var(--fg-dim);
+  display: block;
+  gap: 12px;
+  line-height: 1.55;
+}
+
+.exercise-questions li::before {
+  content: '→  ';
+  color: var(--fg-faint);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ── EXAMPLE ──────────────────────────────────────── */
+.example {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 1px dashed var(--border2);
+  padding: 18px 22px;
+  margin: 16px 0;
+}
+
+.example-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 8px;
+}
+
+.example p { font-size: 13px; color: var(--fg-dim); margin: 0; line-height: 1.62; }
+.example p strong { color: var(--fg); }
+
+/* ── TWO COL ──────────────────────────────────────── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin: 16px 0; background: var(--border); }
+
+.col-block { background: var(--bg2); padding: 20px; }
+
+.col-block-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 12px;
+}
+
+/* ── FORMAT LIST ──────────────────────────────────── */
+.format-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 16px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.format-list li {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg2);
+  align-items: flex-start;
+  transition: background .15s;
+}
+
+.format-list li:hover { background: var(--bg3); }
+.format-list li .fi { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+.format-list li .ft { color: var(--fg); font-weight: 600; font-size: 14px; font-family: 'Barlow Semi Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
+.format-list li .fd { color: var(--fg-dim); font-size: 13px; margin-top: 4px; line-height: 1.55; }
+
+/* ── PLATFORM GRID ────────────────────────────────── */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  margin: 20px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.platform-item {
+  padding: 22px 20px;
+  background: var(--bg2);
+  transition: background .15s;
+}
+
+.platform-item:hover { background: var(--bg3); }
+.platform-icon { font-size: 24px; margin-bottom: 10px; }
+
+.platform-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 4px;
+}
+
+.platform-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.platform-role { font-size: 12px; color: var(--fg-dim); line-height: 1.52; }
+
+/* ── FUNNEL ───────────────────────────────────────── */
+.funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 20px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.funnel-step {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 18px 22px;
+  background: var(--bg2);
+  transition: background .15s;
+}
+
+.funnel-step:hover { background: var(--bg3); }
+
+.funnel-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: rgba(240,237,230,0.15);
+  flex-shrink: 0;
+  line-height: 1;
+  min-width: 44px;
+}
+
+.funnel-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.funnel-desc { font-size: 13px; color: var(--fg-dim); line-height: 1.55; }
+
+/* ── PENDING ──────────────────────────────────────── */
+.pending {
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  padding: 22px 26px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.pending::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--fg-faint);
+}
+
+.pending-icon { font-size: 20px; margin-bottom: 8px; }
+
+.pending-q {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--fg);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.pending-hint { font-size: 13px; color: var(--fg-dim); line-height: 1.6; }
+
+/* ── MONEY LADDER ─────────────────────────────────── */
+.money-ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 20px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.ladder-step {
+  display: flex;
+  gap: 20px;
+  padding: 18px 22px;
+  background: var(--bg2);
+  transition: background .15s;
+  align-items: flex-start;
+}
+
+.ladder-step:hover { background: var(--bg3); }
+
+.ladder-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--fg-faint);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+.ladder-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--fg);
+  margin-bottom: 4px;
+}
+
+.ladder-desc { font-size: 13px; color: var(--fg-dim); line-height: 1.55; }
+
+/* ── TABLE ────────────────────────────────────────── */
+.info-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+
+.info-table th {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  border-bottom: 1px solid var(--border2);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.info-table td {
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--fg-dim);
+  line-height: 1.58;
+}
+
+.info-table td:first-child {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.info-table td strong { color: var(--fg); }
+.info-table tr:hover td { background: var(--bg2); }
+
+/* ── HR ───────────────────────────────────────────── */
+hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  padding: 60px 64px;
+  background: #000;
+  color: var(--fg-faint);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+footer img { width: 50px; opacity: 0.6; }
+
+/* ── ANIMATIONS ───────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ── ANSWER BOX ───────────────────────────────────── */
+.answer-box {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: rgba(240,237,230,0.04);
+  border: 1px solid var(--border2);
+  border-left: 2px solid var(--fg-faint);
+  color: var(--fg);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s, background .2s;
+  min-height: 52px;
+}
+.answer-box:focus {
+  border-color: var(--fg-dim);
+  background: rgba(240,237,230,0.07);
+}
+.answer-box::placeholder { color: var(--fg-faint); }
+
+/* ── TECHNIQUE BADGE ──────────────────────────────── */
+.technique-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--fg);
+  color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  margin-bottom: 16px;
+}
+
+/* ── ARSENAL NOTE ─────────────────────────────────── */
+.arsenal-note {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--fg);
+  padding: 14px 20px;
+  margin: 18px 0 28px;
+  font-size: 13px;
+  color: var(--fg-dim);
+  font-style: italic;
+}
+.arsenal-note strong { color: var(--fg); font-style: normal; }
+
+/* ── CATALOG SECTION ──────────────────────────────── */
+.catalog-section {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 28px 32px;
+  margin: 28px 0;
+}
+.catalog-section h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg);
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+.catalog-section h4:first-child { margin-top: 0; }
+.catalog-section p { font-size: 13px; color: var(--fg-dim); line-height: 1.65; margin-bottom: 0; }
+
+/* ── ADS TWO COL ──────────────────────────────────── */
+.ads-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 16px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.ads-block { background: var(--bg2); padding: 18px 20px; }
+.ads-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ads-label.no { color: #e08070; }
+.ads-label.yes { color: #70c090; }
+.ads-block p { font-size: 13px; color: var(--fg-dim); line-height: 1.6; margin: 0; }
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .cover, .chapter, .section-div { padding-left: 20px; padding-right: 20px; }
+  .cover { padding-bottom: 56px; }
+  .cover h1 { font-size: clamp(46px, 16vw, 80px); }
+  .cover-logo { width: 64px; top: 36px; left: 20px; }
+  .cover-vol { top: 40px; right: 20px; font-size: 10px; }
+  .two-col { grid-template-columns: 1fr; }
+  .platform-grid { grid-template-columns: 1fr 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
+  .ads-two-col { grid-template-columns: 1fr; }
+  .info-table { font-size: 12px; }
+  .info-table th, .info-table td { padding: 10px 10px; }
+  .funnel-num { font-size: 26px; min-width: 32px; }
+  .chapter h2 { font-size: clamp(28px, 8vw, 48px); }
+  .money-ladder .ladder-step { flex-direction: column; gap: 8px; }
+  footer { flex-direction: column; padding: 40px 24px; gap: 12px; }
+  .exercise { padding: 18px 18px; }
+}
+@media (max-width: 480px) {
+  .cover h1 { font-size: clamp(38px, 14vw, 56px); }
+  .platform-grid { grid-template-columns: 1fr; }
+  .cover-toc a { font-size: 10px; padding: 6px 10px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════════ COVER -->
+<div class="cover">
+  <div class="cover-grain"></div>
+  <img class="cover-logo" src="data:image/png;base64,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AiIgIiICIiAiIgIiICIiAiIgkfY3c+o2/wBXWiqusVbeNOUVYat9pFU5sQnLeVtQ1meQyM6EZHl3HQiXuMbiCsG4ml7VpXQ9VVSW6R4q7o+WB0RLmgeHDg98ElxxkZDcE4VWkQEREBERAREQEREBERAREQEREBdppXT171VfqWxadttRcrlVO5YaeFuXH1J8gB3JOAB1JC6tXd9nhTTO01W11t0nQ08Iq5Ke536er556khjXR08UQGWNbzsc5xOD6En4A6raTgxq47tSXLcm8UclFH+kktdue8ulPkx8pAwPXlyfIOHdXGtNuoLRbKe2Wujp6KipoxHBTwRhkcbR2DWjoAuUiAiL8cQ1pc4gADJJ8kH6uDf7zadP2me7Xu40tuoKdvNLUVMoYxg+ZP8Al5qBt8OKvReiBPatLeFqm+sy0iGT+6QO7fHIPvEfssz6EtVIN0tzta7l3b7Q1ZeZaprHEwUjPgp6cHyZGOg6dMnLjjqSgsxvlxilwnsu1VMWjqx17rIuv1hid/4nj+XzVQr5drnfLrUXW83CquFfUO55qiplMkjz83HqVwkQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERB3eh9KX7WupqTTmmrfJX3KqJEcTSAAAMlznHo1oHUkrTLho26l2w2lt+m60Qm6Plkqri+J/Mx0zzjocDoGNY3+VRP7PKttFft9XxU+laekuVtl8CpvLaaNjqxr3Oe2IyD4nFgxkHoMsVo0BFFnEVvRYtotMePP4ddf6thFutwd1ee3iSY6tjB7nuT0HmRQIb6brs1ZcdTw60uMVxuEToJiC10TI3EHljjcC2PGBgtAI8jknIXn3p4k9A7ZXgWOobWXu7hpM1NbyxzaY+TZXucA1xP6oyQOpA6ZppvbxFa+3MdNQOqvsOwPJAttE8gSN9JZOhk+nRv7qh+ommqaiSoqJZJppXl8kkji5z3E5JJPUknzXzQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREF6dA7q6S4edu9G6L1FaK4VdysLr7Vvpmh0gnmeSyN7TjqQC3Ofh5GgjHUe03c4ldOaJ0BQVsUMU+r7lb4qiOyeL4hoZJGBxFQ4Y5Qwkgt6OcR0ABJFQ+LbU9q1buParraZJ3RO05b/EbK0jw3ui8TlGfINkb+OVGusdRXPVmp6/Ud6lZLcK+Xxah7GBgc7AGcDoOyD6a31VfdaanrNR6jr5K641b+aSR3Zo8mtHZrQOgA6ALpERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//Z" alt="Larry">
+  <div class="cover-vol">Vol. 1 · Companion Guide</div>
+
+  <div class="cover-type">Vol. 1 · Manual práctico · Artistas independientes</div>
+
+  <h1>Tu<br><span class="line2">Marca.</span><span class="line3">Tu Carrera.</span></h1>
+
+  <p class="cover-desc">Todo lo que necesitás para construir una identidad sólida como artista independiente — antes, durante y después de cada lanzamiento. <strong>Complementa la Guía de Lanzamiento Exitoso.</strong></p>
+
+  <div style="margin-bottom:28px;opacity:0;animation:fadeUp .55s .44s forwards;">
+    <div style="display:inline-block;border-top:1px solid rgba(240,237,230,0.45);border-bottom:1px solid rgba(240,237,230,0.45);padding:14px 0;">
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,237,230,0.92);">La marca artística no se tiene, se construye.</span>
+    </div>
+  </div>
+
+  <div class="cover-toc">
+    <a href="#cap1">01 · Diagnóstico</a>
+    <a href="#cap2">02 · Posicionamiento</a>
+    <a href="#cap3">03 · Oyente Ideal</a>
+    <a href="#cap4">04 · Perfil Digital</a>
+    <a href="#cap5">05 · Tres Pilares</a>
+    <a href="#cap6">06 · Embudo Musical</a>
+    <a href="#cap7">07 · Formatos & Ideas</a>
+    <a href="#cap8">08 · Plataformas</a>
+    <a href="#cap9">09 · Puente al Lanzamiento</a>
+    <a href="#cap10">10 · Monetización</a>
+    <a href="#cap11">11 · Las preguntas que importan</a>
+  </div>
+</div>
+
+<!-- ═══════════ CAP 1 -->
+<div class="chapter" id="cap1">
+  <div class="ch-label">Capítulo 01 · Punto de partida</div>
+  <h2>Diagnóstico:<br>dónde estás hoy</h2>
+
+  <p>Antes de construir cualquier estrategia, necesitás entender honestamente qué tenés y qué te falta. Si alguien entra a tu perfil ahora mismo, ¿entiende en 5 segundos quién sos, qué hacés y por qué debería quedarse? La mayoría de los artistas con talento real fallan exactamente ahí. No porque no tengan nada para mostrar — sino porque no lo están mostrando con <strong>Claridad</strong>.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">El problema no es que no tengas nada para mostrar. El problema es que no estás mostrando nada.</div>
+    <span class="rule-label">Principio #1</span>
+  </div>
+
+  <h3>Las cuatro trampas del artista independiente</h3>
+
+  <div class="card-grid">
+    <div class="card" style="border-top:3px solid #e08070">
+      <div class="card-tag" style="color:#e08070">Trampa A</div>
+      <h4>Solo el resultado final</h4>
+      <p>Publicás el tema cuando sale, pero no mostrás nada del proceso. La gente no tiene contexto, no tiene expectativa, y el lanzamiento se pierde en el ruido.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #e08070">
+      <div class="card-tag" style="color:#e08070">Trampa B</div>
+      <h4>Esperar la disquera</h4>
+      <p>Creer que la marca personal viene después del sello. Hoy es al revés: la marca sólida es lo que atrae las oportunidades.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #e08070">
+      <div class="card-tag" style="color:#e08070">Trampa C</div>
+      <h4>El falso influencer</h4>
+      <p>Invertir en fotos aspiracionales mientras la música y la estrategia quedan en segundo plano. Imagen sin sustancia.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #e08070">
+      <div class="card-tag" style="color:#e08070">Trampa D</div>
+      <h4>El perfeccionismo paralizante</h4>
+      <p>Esperar el perfil perfecto, el feed perfecto, el video perfecto. El perfeccionismo es la forma más elegante de no publicar nada.</p>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-text">La ejecución vence a la espera.</div>
+    <span class="rule-label">Principio de acción — Publicar imperfecto siempre supera a esperar perfecto.</span>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio 1.1 — Diagnóstico honesto</div>
+    <h4>Respondé estas preguntas antes de seguir</h4>
+    <ul class="exercise-questions">
+      <li><div>¿Quién sos? Y como artista, ¿quién sos? Describite en dos oraciones sin usar palabras vagas.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Qué hacés? ¿Qué tipo de música hacés, en qué subgénero y para quién?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Por qué alguien debería escucharte a vos y no a otro artista del mismo género?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Qué es lo que más te alagan las personas que te escuchan? ¿Qué dicen de tu música o de vos?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Si alguien entra a tu perfil ahora mismo: ¿puede entender en 5 segundos qué tipo de música hacés y cuál es tu vibra? Si la respuesta es no — describí ahora mismo qué tipo de música hacés y cuál es tu vibra.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="3"></textarea></li>
+      <li><div>¿Cuándo fue la última vez que publicaste contenido que no fuera el anuncio de un lanzamiento?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Tenés definido qué te hace diferente a los 500 artistas de tu género que existen hoy? Si la respuesta es no — pensá: ¿qué elemento o estética visual te podría identificar y diferenciar hoy?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="3"></textarea></li>
+      <li><div>¿Sabés cuántos oyentes mensuales tenés en Spotify y en qué ciudades te escuchan más?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+    </ul>
+  </div>
+
+  <h3>Checklist de punto de partida</h3>
+  <ul class="checklist" id="cl1">
+    <li><span class="check-box">✓</span>Tengo claro qué género y sub-género hago (en términos concretos, no vagos)</li>
+    <li><span class="check-box">✓</span>Mi bio en redes dice quién soy en menos de dos oraciones</li>
+    <li><span class="check-box">✓</span>Publico contenido con una frecuencia mínima — no solo cuando tengo un lanzamiento</li>
+    <li><span class="check-box">✓</span>Tengo acceso a Spotify for Artists y sé leer mis métricas básicas</li>
+    <li><span class="check-box">✓</span>Sé nombrar al menos 3 artistas emergentes de mi nicho que hacen contenido bien</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 2 -->
+<div class="chapter" id="cap2">
+  <div class="ch-label">Capítulo 02 · Identidad</div>
+  <h2>Posicionamiento:<br>el lugar único que ocupás</h2>
+
+  <p>El posicionamiento es la respuesta a esta pregunta: <strong>¿por qué yo y no cualquier otro artista del mismo género?</strong> No es un eslogan ni una frase bonita para el bio. Es el conjunto de elementos únicos — sonido, historia, estética, perspectiva — que hacen que tu nombre ocupe un lugar específico.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">Necesitás ser el que lo hace. La gente no sigue artistas — sigue personas con una historia y un sonido que no pueden encontrar en otro lugar.</div>
+    <span class="rule-label">Principio #2</span>
+  </div>
+
+  <h3>Los tres ejes del posicionamiento musical</h3>
+
+  <div class="card-grid">
+    <div class="card" style="border-top:3px solid #70a8e0">
+      <div class="card-tag" style="color:#70a8e0">Eje 1 — Sonido</div>
+      <h4>Micro-nicho musical</h4>
+      <p>No "indie" o "urbano" — eso es demasiado amplio. Definí con precisión: género + subgénero + referencias. Ejemplo: <em>R&B alternativo con influencias de soul de los 70 y electrónica minimalista.</em></p>
+    </div>
+    <div class="card" style="border-top:3px solid #c9a85c">
+      <div class="card-tag" style="color:#c9a85c">Eje 2 — Historia</div>
+      <h4>Tu narrativa personal</h4>
+      <p>De dónde venís, qué viviste, qué te llevó a hacer lo que hacés. La historia que conecta tu vida con tu música es lo que genera fidelidad — no las streams.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #70c090">
+      <div class="card-tag" style="color:#70c090">Eje 3 — Perspectiva</div>
+      <h4>Lo que decís que nadie más dice</h4>
+      <p>Tu postura sobre la música, la industria, la vida. Opiniones directas, respaldadas por tu experiencia real. Sin esto, sos uno más en el montón.</p>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-text">La calidad técnica sí importa. La narrativa diferencia — pero el sonido tiene que estar a la altura. Un micro-nicho bien definido + un Sonido Pro = No falla.</div>
+    <span class="rule-label">Contrapeso — Posicionamiento · Eje 1</span>
+  </div>
+
+  <div class="companion-banner" style="border-left-color:var(--gold);margin-top:32px;">
+    <div class="companion-icon">🎮</div>
+    <div class="companion-body">
+      <div class="companion-label" style="color:var(--gold);">Identidad única — no seas un NPC</div>
+      <p class="companion-text">El contenido genérico existe en masa. La única salida es ser genuinamente diferente — y eso viene de saber quién sos antes de pensar en viralidad.</p>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:4px;">
+    <div class="card">
+      <div class="card-tag">Contenido con intención</div>
+      <h4>No hagas por hacer</h4>
+      <p>La mayoría usa los mismos hooks, los mismos trucos de retención, la misma estructura. Cada decisión en tu contenido — el plano, la música, el gancho — tiene que tener un propósito. Nada se hace porque sí.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Identidad creativa primero</div>
+      <h4>Quién sos cuando creás</h4>
+      <p>Antes de pensar en formatos o plataformas, definí quién sos cuando creás. Tus colores, tu forma de hablar, tus obsesiones, tus experiencias — todo eso ya existe en vos. El trabajo es traducirlo en contenido.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Comunidad a largo plazo</div>
+      <h4>No buscás virales — buscás fans</h4>
+      <p>Un video viral que no conecta con tu identidad no construye nada. Lo que buscás es que la gente te siga por lo que sos. Eso genera fans fieles, clientes que repiten y personas que te recomiendan sin que lo pidas.</p>
+    </div>
+    <div class="card">
+      <div class="card-tag">Robar como artista</div>
+      <h4>Principios, no copias</h4>
+      <p>Estudiá a los que funcionan. Analizá por qué cada decisión estética fue tomada. Pero nunca hagas lo mismo — tomá los principios y construí algo propio. Copiar te hace reemplazable.</p>
+    </div>
+  </div>
+
+  <div class="exercise" style="margin-top:20px;">
+    <div class="exercise-label">✏️ Ejercicio 2.0 — Tu Moodboard · Muro de Inspiración Visual</div>
+    <h4>Construí tu referencia visual permanente — antes de seguir</h4>
+
+    <p style="font-size:13px;color:var(--fg-dim);line-height:1.68;margin:0 0 18px;">Este ejercicio tiene dos objetivos concretos: <strong style="color:var(--fg);">primero</strong>, obligarte a definir tu estética visual de una vez. <strong style="color:var(--fg);">Segundo</strong>, crear un lugar al que puedas volver siempre que necesites inspiración, ideas nuevas, o recordar cómo tiene que verse tu contenido. No es un ejercicio de una sola vez — es una herramienta que vas a usar toda tu carrera.</p>
+
+    <div class="companion-banner" style="margin:0 0 20px;border-left-color:var(--gold);">
+      <div class="companion-icon">🛠️</div>
+      <div class="companion-body">
+        <div class="companion-label" style="color:var(--gold);">Herramienta recomendada — Miro.com (Gratis)</div>
+        <p class="companion-text">Creá un tablero en <strong>miro.com</strong> y usalo como tu muro de inspiración visual. Podés pegar imágenes, capturas, colores, tipografías, referencias de video — todo en un solo lugar. Es visual, flexible y gratis. Si preferís físico, un tablero con fotos impresas funciona igual.</p>
+      </div>
+    </div>
+
+    <ul class="exercise-questions">
+      <li>
+        <div>📌 <strong>Referentes artísticos</strong> — Nombrálos 5 artistas o creadores que admirás. No tienen que ser del mismo género. ¿Qué tienen en común? ¿Qué te atrae de cómo se muestran?</div>
+        <textarea class="answer-box" placeholder="Ej: artista 1 — me atrae su forma de filmar, el color de sus videos... artista 2 — su forma de hablar a cámara..." rows="3"></textarea>
+      </li>
+      <li>
+        <div>🎨 <strong>Referencias visuales</strong> — 5 marcas, películas, feeds o estéticas que representen cómo querés que se vea tu proyecto. Pensá en colores dominantes, texturas, energía general, tipo de planos.</div>
+        <textarea class="answer-box" placeholder="Ej: paleta oscura y minimalista como la de X, planos cercanos como en Y, energía cruda como en Z..." rows="3"></textarea>
+      </li>
+      <li>
+        <div>🔤 <strong>Tipografía y estilo gráfico</strong> — ¿Cómo se ven tus textos en pantalla? ¿Fuentes gruesas o finas? ¿Mayúsculas o minúsculas? ¿Con subtítulos o sin? Describí o pegá referencias en tu tablero.</div>
+        <textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea>
+      </li>
+      <li>
+        <div>🌈 <strong>Paleta de colores fija</strong> — ¿Cuáles son los 3 o 4 colores que van a estar siempre en tu contenido? (Fondo, texto, acento, ropa/setup). La paleta fija es lo que hace que tu feed sea reconocible.</div>
+        <textarea class="answer-box" placeholder="Ej: negro, blanco roto, un acento cálido tipo ocre o bordo..." rows="2"></textarea>
+      </li>
+      <li>
+        <div>⚡ <strong>Energía y mood general</strong> — Si tu proyecto fuera una película, ¿cuál sería? Si fuera una época del día, ¿cuál? Si fuera una ciudad, ¿cuál? Estas respuestas definen el tono de todo lo que producís.</div>
+        <textarea class="answer-box" placeholder="Ej: noche urbana, calle mojada, neones, soledad acompañada..." rows="2"></textarea>
+      </li>
+      <li>
+        <div>🧭 <strong>Valores que guían el contenido</strong> — 3 valores concretos que definen cómo trabajás y qué vas a publicar. Estos son el filtro para cada decisión de contenido: si algo no encaja con estos valores, no va.</div>
+        <textarea class="answer-box" placeholder="Ej: autenticidad, proceso honesto, calidad sobre cantidad..." rows="2"></textarea>
+      </li>
+    </ul>
+
+    <div style="margin-top:18px;padding:14px 18px;background:rgba(201,168,92,0.07);border:1px solid rgba(201,168,92,0.25);border-left:3px solid var(--gold);">
+      <p style="font-size:12px;color:var(--fg-dim);margin:0;line-height:1.65;"><strong style="color:var(--gold);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.1em;text-transform:uppercase;font-size:11px;">Cómo usarlo después</strong><br>
+      Cada vez que vayas a grabar contenido, abrí el tablero antes. Cada vez que tengas dudas sobre si algo "encaja" con tu proyecto, mirá el tablero. Cuando sientas que tu contenido perdió identidad, volvé al tablero y re-alineá. El moodboard no es una tarea — es tu brújula.</p>
+    </div>
+  </div>
+
+  <h3>Cómo encontrar tu micro-nicho</h3>
+
+  <table class="info-table">
+    <thead>
+      <tr><th>Nivel</th><th>Ejemplo</th><th>Competencia</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Mercado</td><td>Música urbana</td><td>Millones de artistas</td></tr>
+      <tr><td>Nicho</td><td>Trap melódico en español</td><td>Miles de artistas</td></tr>
+      <tr><td>Sub-nicho</td><td>Trap melódico introspectivo con letras de desamor</td><td>Cientos de artistas</td></tr>
+      <tr><td><strong>Micro-nicho</strong></td><td><strong>Trap melódico introspectivo desde Buenos Aires, producción lo-fi, letras sobre crecer en el conurbano</strong></td><td><strong>Muy pocos artistas</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio 2.1 — Definí tu posicionamiento</div>
+    <h4>Completá estas frases con honestidad</h4>
+    <ul class="exercise-questions">
+      <li><div>Mi música es para personas que escuchan [artistas de referencia] pero les falta [algo que vos ofrecés].</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>La creencia equivocada que más quiero romper sobre mi género o industria es...</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Algo que pasé o viví que está directamente en mi música y que no le pasa a la mayoría es...</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Si alguien cierra los ojos y escucha mi música por primera vez, qué emoción o imagen debería aparecer.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+    </ul>
+  </div>
+
+  <h3>Checklist de posicionamiento</h3>
+  <ul class="checklist" id="cl2">
+    <li><span class="check-box">✓</span>Puedo describir mi música en dos oraciones sin usar palabras vagas como "ecléctico" o "versátil"</li>
+    <li><span class="check-box">✓</span>Sé nombrar 3 artistas con audiencias similares a la que quiero llegar</li>
+    <li><span class="check-box">✓</span>Tengo al menos 2 perspectivas propias sobre mi arte o industria que puedo defender con mi historia</li>
+    <li><span class="check-box">✓</span>Mi estética visual es coherente con el mood de mi música</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 3 -->
+<div class="chapter" id="cap3">
+  <div class="ch-label">Capítulo 03 · A quién le hablás</div>
+  <h2>El oyente ideal:<br>construir para alguien concreto</h2>
+
+  <p>No le podés hablar a todo el mundo. Porque nadie va a sentir que les estás hablando a ellos — Tenés que direccionar el mensaje a un oyente, porque es más fácil que el algoritmo lo encuentre y lo lleve a más personas iguales.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">El algoritmo no sabe quién sos. Aprende. Y aprende de los oyentes que ya tenés. Un nicho claro educa al algoritmo mejor que cualquier campaña paga.</div>
+    <span class="rule-label">Principio #3</span>
+  </div>
+
+  <h3>Dolores y deseos de tu oyente</h3>
+  <p style="font-size:12px;color:var(--fg-faint);margin-bottom:10px;font-style:italic;">Los siguientes son ejemplos orientativos — identificá los que aplican a tu proyecto.</p>
+
+  <div class="two-col">
+    <div class="col-block">
+      <div class="col-block-label">Dolores / Contextos de escucha</div>
+      <div class="tag-row">
+        <span class="pill pain">Noches que no puede dormir</span>
+        <span class="pill pain">Viaje en transporte solo</span>
+        <span class="pill pain">Desamor reciente</span>
+        <span class="pill pain">Crecer y no saber a dónde va</span>
+        <span class="pill pain">Necesita música para concentrarse</span>
+      </div>
+    </div>
+    <div class="col-block">
+      <div class="col-block-label">Deseos / Lo que busca en la música</div>
+      <div class="tag-row">
+        <span class="pill desire">Sentirse acompañado sin hablar</span>
+        <span class="pill desire">Que alguien ponga en palabras lo que no puede</span>
+        <span class="pill desire">Descubrir artistas antes que el resto</span>
+        <span class="pill desire">Que su playlist lo represente</span>
+        <span class="pill desire">Música que se quede — no descartable</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-label">Cómo aplicarlo — ejemplos concretos</div>
+    <p><strong>Si tu oyente escucha tu música de noche cuando no puede dormir:</strong> grabá un reel que simule las 2am en tu cuarto, con poca luz, contando qué sentías cuando escribiste la canción. No pulido. Real. <strong>Si te escucha para procesar el desamor:</strong> contá la historia específica que dio origen a esa letra — bien natural.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio 3.1 — Mapeá a tu oyente ideal</div>
+    <h4>Intentá describir a una persona concreta</h4>
+    <ul class="exercise-questions">
+      <li><div>¿Cuántos años tiene? ¿Dónde vive? ¿Qué hace durante el día?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿En qué momento del día escucha música y en qué contexto?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Qué otros artistas escucha? ¿Qué tienen esos artistas que vos también tenés?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Qué necesita sentir que todavía no puede encontrar en lo que consume habitualmente?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+    </ul>
+  </div>
+
+  <h3>Checklist de oyente ideal</h3>
+  <ul class="checklist" id="cl3">
+    <li><span class="check-box">✓</span>Puedo describir a mi oyente ideal en un párrafo sin usar palabras genéricas</li>
+    <li><span class="check-box">✓</span>Sé en qué plataformas pasa más tiempo y qué tipo de contenido consume</li>
+    <li><span class="check-box">✓</span>Conozco 3 artistas que ya tienen ese oyente y analicé cómo se comunican</li>
+    <li><span class="check-box">✓</span>Mi contenido está pensado para resonar con esa persona — no para impresionar a la industria</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 4 -->
+<div class="chapter" id="cap4">
+  <div class="ch-label">Capítulo 04 · Primera impresión</div>
+  <h2>Tu perfil digital:<br>la primera puerta</h2>
+
+  <p>Antes de que alguien escuche tu música, pasa por tu perfil. Tenés entre 3 y 5 segundos para convencerlo de que vale la pena escucharte.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">Tu perfil de Instagram es tu landing page. Tu perfil de Spotify es tu carta de presentación ante playlists y algoritmos. Si alguno está descuidado, estás dejando oyentes en la mesa.</div>
+    <span class="rule-label">Principio #4</span>
+  </div>
+
+  <h3>Estética como puerta de entrada</h3>
+
+  <p>La estética no es vanidad. Es lo que decide si alguien entra al video o sigue scrolleando. <strong>Comunica antes que las palabras.</strong> Podés tener el mejor contenido del mundo — si el video se ve barato, nadie lo abre. La gente decide en fracciones de segundo: no analiza, siente.</p>
+
+  <div class="two-col">
+    <div class="col-block">
+      <div class="col-block-label">Estética premium → resultados premium</div>
+      <p style="font-size:13px;color:var(--fg-dim);line-height:1.6;margin:0;">No es cuestión de cámara cara — es cuestión de orden, limpieza, intención. Un iPhone bien usado supera a una cámara mal aprovechada. Lo que atrae no es lujo, es <strong>percepción de calidad.</strong></p>
+    </div>
+    <div class="col-block">
+      <div class="col-block-label">Retención visual + storytelling</div>
+      <p style="font-size:13px;color:var(--fg-dim);line-height:1.6;margin:0;">La estética retiene al espectador en los primeros segundos. El storytelling lo retiene el resto del video. Uno sin el otro es incompleto. Cuando combinás ambas, la curva de retención cae mucho más lento y el algoritmo te premia.</p>
+    </div>
+  </div>
+
+  <h3>Cómo mejorar tu estética (de adentro hacia afuera)</h3>
+
+  <ul class="format-list">
+    <li><span class="fi">👁️</span><div><div class="ft">Cultura visual</div><div class="fd">Guardá todo lo que te impacte — no para copiarlo, sino para analizarlo. Preguntate siempre: ¿por qué funciona? ¿qué transmite? ¿qué tiene de diferente?</div></div></li>
+    <li><span class="fi">🗂️</span><div><div class="ft">Moodboard propio</div><div class="fd">Armá un tablero con todo lo que forma tu identidad — creadores, marcas, colores, tipografías, ropa, objetos, valores. Eso es tu dirección visual. No es inspiración, es a dónde vas.</div></div></li>
+    <li><span class="fi">🧱</span><div><div class="ft">Construcción, no copia</div><div class="fd">Inspirarte en otros es parte del proceso. Pero tu estética tiene que nacer de lo que sos vos. Copiar te hace reemplazable; construir te hace reconocible.</div></div></li>
+    <li><span class="fi">✂️</span><div><div class="ft">Simplicidad radical</div><div class="fd">Muchas veces el problema no es que algo se vea mal — es que sobran elementos. Antes de grabar preguntate: ¿qué es lo primero que se ve? ¿debería ser eso? Quitá todo lo que distrae.</div></div></li>
+    <li><span class="fi">🌐</span><div><div class="ft">Coherencia de universo</div><div class="fd">No todo tiene que ser perfecto, pero todo tiene que parecer del mismo mundo. Mismos colores, tipografías, energía, mensaje. Lo inconsistente confunde y marea.</div></div></li>
+  </ul>
+
+  <div class="ads-two-col" style="margin:24px 0;">
+    <div class="ads-block">
+      <div class="ads-label no">✗ No necesitás</div>
+      <p>Cámara cara. Setup perfecto desde el día 1. Subtítulos genéricos. Efectos de tendencia. Empezá con los mínimos y pulilos con el tiempo.</p>
+    </div>
+    <div class="ads-block">
+      <div class="ads-label yes">✓ Mínimos innegociables</div>
+      <p>Tipografías siempre iguales. Paleta de colores fija. Tipo de planos consistente. Energía reconocible en la forma de hablar.</p>
+    </div>
+  </div>
+
+  <div class="pending">
+    <div class="pending-icon">🔎</div>
+    <div class="pending-q">Antes de subir — 3 preguntas rápidas</div>
+    <div class="pending-hint">¿Lo primero que se ve comunica mis valores? ¿Es simple y claro? ¿Parece del mismo universo que el resto de mi contenido?</div>
+  </div>
+
+  <h3>Instagram / TikTok — El perfil que convierte</h3>
+
+  <ul class="format-list">
+    <li><span class="fi">📸</span><div><div class="ft">Foto de perfil</div><div class="fd">Clara, reconocible, coherente con tu estética musical. La gente tiene que reconocer tu cara antes de escuchar tu nombre.</div></div></li>
+    <li><span class="fi">✍️</span><div><div class="ft">Bio — máximo dos líneas</div><div class="fd">Quién sos + qué hacés + para quién. Evitá emojis excesivos y frases genéricas como "música desde el alma". Formato recomendado: <em>"Artista [género] desde [ciudad]. [idea/frase que te define o a tu proyecto]."</em></div></div></li>
+    <li><span class="fi">🔗</span><div><div class="ft">Link en bio — siempre activo</div><div class="fd">Si hay lanzamiento: pre-save o link directo a la canción. Si no: Linktree con Spotify, YouTube y el lanzamiento más reciente. Nunca dejes el link vacío.</div></div></li>
+    <li><span class="fi">📌</span><div><div class="ft">Reels fijados — los tres que mejor te representan</div><div class="fd">Elegí los que muestran tu sonido, tu historia y tu forma de comunicarte — no los que tuvieron más views si no te representan bien.</div></div></li>
+    <li><span class="fi">⭐</span><div><div class="ft">Historias destacadas — ordenadas con sentido</div><div class="fd">Acá subimos recuerdos. Sugerencias: Música (Las Canciones), Proceso (Esta es la Buena), Live (Esta también), Personal (Cosas relacionadas con el proyecto). Que sea fácil de entender para quien llega por primera vez.</div></div></li>
+  </ul>
+
+  <h3>Spotify for Artists — Tu perfil de escucha</h3>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-tag">Biografía</div><h4>Contá quién sos</h4><p>2–3 párrafos. No copies el bio de Instagram. Incluí influencias, qué representa tu proyecto, y algo personal que genere conexión.</p></div>
+    <div class="card"><div class="card-tag">Foto de artista</div><h4>Profesional y coherente</h4><p>Coherente con tu estética. Actualizala con cada era de tu proyecto. Verificá que se vea bien en tamaño thumbnail.</p></div>
+    <div class="card"><div class="card-tag">Artist Pick</div><h4>Siempre actualizado</h4><p>Lo primero que ve la gente cuando entra a tu perfil. Mantenela actualizada con tu material más reciente.</p></div>
+    <div class="card"><div class="card-tag">Playlists propias</div><h4>Mostrá tus influencias</h4><p>El algoritmo de Spotify aprende con quiénes te relacionás y puede recomendarte a oyentes similares.</p></div>
+  </div>
+
+  <h3>Checklist de perfil digital</h3>
+  <ul class="checklist" id="cl4">
+    <li><span class="check-box">✓</span>Mi bio dice quién soy en dos oraciones sin palabras vagas</li>
+    <li><span class="check-box">✓</span>Mi link en bio lleva a Spotify o a un pre-save activo</li>
+    <li><span class="check-box">✓</span>Tengo Spotify for Artists verificado y mi biografía está completa</li>
+    <li><span class="check-box">✓</span>Mis historias destacadas están organizadas para un nuevo oyente</li>
+    <li><span class="check-box">✓</span>El Artist Pick de Spotify está actualizado</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 5 -->
+<div class="chapter" id="cap5">
+  <div class="ch-label">Capítulo 05 · Qué publicar</div>
+  <h2>Los tres pilares<br>de contenido</h2>
+
+  <p>El error más común es publicar solo cuando hay un lanzamiento. Eso hace que la cuenta parezca inactiva el 90% del tiempo, y el 10% restante sea pura publicidad. La gente no sigue cuentas de publicidad — sigue personas.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">Un lanzamiento sin comunidad construida es un árbol que cae en el bosque sin nadie que lo escuche. El contenido entre lanzamientos es lo que hace que la gente siga conectada con nosotros.</div>
+    <span class="rule-label">Principio #5</span>
+  </div>
+
+  <h3>Pilar 1 — Documental: el proceso visible</h3>
+  <p>Mostrá lo que está pasando mientras sucede. El proceso de componer, el día en el estudio, las decisiones detrás de una canción, los errores, lo que no salió bien. El contenido más poderoso porque nadie más puede replicarlo.</p>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-tag">Documental</div><h4>Proceso de composición</h4><p>Cómo nació una idea, cómo evolucionó. 30 segundos grabados en el momento valen más que un video producido a posteriori.</p></div>
+    <div class="card"><div class="card-tag">Documental</div><h4>Día en el estudio</h4><p>El estudio, la sesión, las tomas fallidas, el momento donde algo encajó. Incluso si es tu cuarto con una interfaz de audio.</p></div>
+    <div class="card"><div class="card-tag">Documental</div><h4>Historia detrás del tema</h4><p>Qué estabas viviendo cuando lo escribiste. No el concepto artístico — la situación real.</p></div>
+    <div class="card"><div class="card-tag">Documental</div><h4>Errores y aprendizajes</h4><p>Lo que salió mal en una grabación, lo que cambiarías. La honestidad radical genera más confianza que la perfección.</p></div>
+  </div>
+
+  <h3>Pilar 2 — Filosófico: tu punto de vista</h3>
+  <p>¿Qué pensás sobre la música, la industria, el arte, la vida? Tus opiniones auténticas — respaldadas por experiencia real — son lo que te diferencia de miles de artistas que hacen música similar.</p>
+
+  <div class="example">
+    <div class="example-label">Ejemplos de contenido filosófico</div>
+    <p><strong>"Por qué nunca voy a sacar un tema solo para que sea viral".</strong> <strong>"Lo que nadie te dice cuando empezás a vivir de la música".</strong> <strong>"Por qué grabé el tema más honesto de mi carrera y casi no lo saco".</strong> Estos temas no requieren producción — requieren que tengas algo real para decir.</p>
+  </div>
+
+  <h3>Pilar 3 — Conocimiento: lo que sabés hacer</h3>
+  <p>Tu experiencia como músico tiene mucho valor para otros. Mostrar cómo funcionan las cosas en tu mundo atrae una audiencia que valora lo que sabés y construye autoridad. <strong>No tenés que ser el mejor, sino el que más muestra.</strong></p>
+
+  <div class="example">
+    <div class="example-label">Ejemplos de contenido de conocimiento</div>
+    <p><strong>"Cómo armé el hook de [canción] en 20 minutos".</strong> <strong>"Qué distribuidora uso y por qué".</strong> <strong>"Cómo funciona un pitch en Spotify for Artists".</strong> No necesitás ser experto — necesitás estar dos pasos adelante de quien te lee.</p>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio 5.1 — Banco de ideas por pilar</div>
+    <h4>Generá 5 ideas de contenido para cada pilar</h4>
+    <ul class="exercise-questions">
+      <li><div>Documental: ¿Qué estás creando ahora mismo que podrías mostrar sin que esté terminado?</div><textarea class="answer-box" placeholder="Tus ideas..." rows="3"></textarea></li>
+      <li><div>Documental: ¿Qué error cometiste recientemente que podría ser valioso para otro artista?</div><textarea class="answer-box" placeholder="Tus ideas..." rows="3"></textarea></li>
+      <li><div>Filosófico: ¿Qué creencia sobre la industria musical te gustaría destruir con tu experiencia?</div><textarea class="answer-box" placeholder="Tus ideas..." rows="3"></textarea></li>
+      <li><div>Conocimiento: ¿Qué aprendiste haciendo música que la mayoría de la gente no sabe?</div><textarea class="answer-box" placeholder="Tus ideas..." rows="3"></textarea></li>
+    </ul>
+  </div>
+
+  <h3>Checklist de pilares de contenido</h3>
+  <ul class="checklist" id="cl5">
+    <li><span class="check-box">✓</span>Tengo los tres pilares definidos y sé qué tipo de contenido va en cada uno</li>
+    <li><span class="check-box">✓</span>Tengo un banco de al menos 15 ideas de contenido (5 por pilar)</li>
+    <li><span class="check-box">✓</span>Publico contenido de los tres pilares — no solo en época de lanzamiento</li>
+    <li><span class="check-box">✓</span>Cada pieza está respaldada por una experiencia real — no por opinión genérica</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 6 -->
+<div class="chapter" id="cap6">
+  <div class="ch-label">Capítulo 06 · Estructura estratégica</div>
+  <h2>El embudo musical:<br>de extraño a oyente fiel</h2>
+
+  <div class="technique-badge">⚙ Técnica Marketing Profesional</div>
+  <p>No todo el contenido que publicás tiene el mismo objetivo. El error más frecuente es publicar puro contenido viral sin nada que convierta ese tráfico en oyentes reales en Spotify. O al revés: solo anuncios de lanzamientos sin haber construido comunidad antes.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">El objetivo final siempre es el mismo: que alguien llegue a Spotify, escuche tu canción, y la guarde. Todo lo demás es infraestructura para llegar ahí.</div>
+    <span class="rule-label">Principio #6</span>
+  </div>
+
+  <h3>Los cuatro niveles del embudo</h3>
+
+  <div class="funnel">
+    <div class="funnel-step"><div class="funnel-num">01</div><div><div class="funnel-title">Exposición — Que te encuentren</div><div class="funnel-desc">Reels y TikToks que llegan a personas que no te conocen. Contenido amplio, atractivo, fácil de compartir. El objetivo no es vender — es que se detengan.</div></div></div>
+    <div class="funnel-step"><div class="funnel-num">02</div><div><div class="funnel-title">Conexión — Que se queden</div><div class="funnel-desc">Historias, behind the scenes, la narrativa de tu proyecto. Aquí se construye la confianza real. Convierte curiosos en comunidad.</div></div></div>
+    <div class="funnel-step"><div class="funnel-num">03</div><div><div class="funnel-title">Conversión — Que escuchen</div><div class="funnel-desc">El link en bio, el pre-save, el anuncio de lanzamiento. Solo funciona cuando los dos pasos anteriores ya hicieron su trabajo.</div></div></div>
+    <div class="funnel-step"><div class="funnel-num">04</div><div><div class="funnel-title">Retención — Que vuelvan</div><div class="funnel-desc">Contenido posterior al lanzamiento. Agradecimientos, backstage, los próximos proyectos. Aquí los oyentes se convierten en comunidad que espera lo que viene.</div></div></div>
+  </div>
+
+  <h3>Contenido Founder-Led: el arma más poderosa</h3>
+  <p>Mostrar el proceso desde adentro — antes de que el tema esté listo, durante la producción, en las semanas previas al lanzamiento. Genera comunidad que llega al día del estreno ya comprometida.</p>
+
+  <div class="example">
+    <div class="example-label">Cómo aplicarlo — semanas previas al lanzamiento</div>
+    <p><strong>Semana 4 antes:</strong> "Estoy terminando algo que me costó más de lo que esperaba..." <strong>Semana 3:</strong> Mostrar 10 segundos del proceso sin revelar el tema. <strong>Semana 2:</strong> La historia de qué estabas viviendo cuando lo escribiste. <strong>Semana 1:</strong> Anunciar la fecha. Para este punto, tu comunidad ya está esperando.</p>
+  </div>
+
+  <div class="companion-banner">
+    <div class="companion-icon">📖</div>
+    <div class="companion-body">
+      <div class="companion-label">Conexión con la Guía de Lanzamiento Exitoso</div>
+      <p class="companion-text">Los <strong>Días 8, 9, 10 y 11</strong> de la guía son el nivel de conversión del embudo. Solo funcionan bien si los niveles de exposición y conexión ya están activos. Empezá a construir el embudo antes del Día 1 del plan de lanzamiento.</p>
+    </div>
+  </div>
+
+  <h3>Checklist del embudo</h3>
+  <ul class="checklist" id="cl6">
+    <li><span class="check-box">✓</span>Tengo contenido de los cuatro niveles del embudo en mi plan semanal</li>
+    <li><span class="check-box">✓</span>Mi link en bio siempre lleva a alguien a escucharme</li>
+    <li><span class="check-box">✓</span>Empiezo a documentar proyectos antes de que estén terminados</li>
+    <li><span class="check-box">✓</span>Publico contenido en las semanas posteriores al lanzamiento</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 7 -->
+<div class="chapter" id="cap7">
+  <div class="ch-label">Capítulo 07 · Cómo publicarlo</div>
+  <h2>Formatos concretos<br>e ideas para músicos</h2>
+
+  <div class="arsenal-note">Esto lo encontrarás mucho más detallado, con un sistema y con ejemplos en el <strong>"Arsenal de Contenido"</strong>.</div>
+  <ul class="format-list">
+    <li><span class="fi">🎤</span><div><div class="ft">Playback + historia</div><div class="fd">Vos cantando el tema en un contexto real — caminando, en el auto, en tu cuarto de noche. No un videoclip. Lo que funciona es la autenticidad del momento, no la calidad técnica.</div></div></li>
+    <li><span class="fi">🎸</span><div><div class="ft">Versión acústica / raw</div><div class="fd">Una versión stripped-down grabada con el celu o una interfaz básica. Llega a oyentes que conectan con la canción en su esencia — sin producción que los distraiga.</div></div></li>
+    <li><span class="fi">🎛️</span><div><div class="ft">Breakdown de producción</div><div class="fd">Mostrar la pantalla del DAW, explicar un sonido específico, desglosar cómo armaste el beat. Atrae músicos y productores — y a oyentes que quieren entender cómo se hace la magia.</div></div></li>
+    <li><span class="fi">📖</span><div><div class="ft">Historia de la letra</div><div class="fd">Leer una línea de la letra y explicar qué querías decir en realidad. No el concepto artístico — la historia real, humana, detrás de esa frase.</div></div></li>
+    <li><span class="fi">🎬</span><div><div class="ft">Voiceover + imágenes del proceso</div><div class="fd">Grabás un audio contando algo y encima mostrás imágenes del estudio, del día a día. Combina storytelling con documental sin necesitar estar frente a cámara.</div></div></li>
+    <li><span class="fi">🤳</span><div><div class="ft">Selfie directo a cámara</div><div class="fd">El formato más simple y uno de los más efectivos. Vos, el celu, y algo concreto para decir. Sin edición. La conexión directa que genera no la puede replicar ningún video producido.</div></div></li>
+    <li><span class="fi">🖼️</span><div><div class="ft">Carrusel tipo "dump" estético</div><div class="fd">Mezcla de fotos del día a día — el estudio, un detalle del equipo, una nota en papel, captura del DAW. La variedad de texturas genera curiosidad y hace que la gente pase todos los slides.</div></div></li>
+  </ul>
+
+  <h3>Tabla de ideas por momento del lanzamiento</h3>
+
+  <table class="info-table">
+    <thead><tr><th>Momento</th><th>Qué publicar</th><th>Objetivo</th></tr></thead>
+    <tbody>
+      <tr><td>4 semanas antes</td><td>Proceso de grabación, historia del tema, breakdown de producción</td><td>Generar expectativa sin revelar</td></tr>
+      <tr><td>2 semanas antes</td><td>Teaser de 10–15 segundos, anuncio de fecha con pre-save</td><td>Convertir el hype en pre-saves</td></tr>
+      <tr><td>Semana del lanzamiento</td><td>Versión acústica, historia de la letra, playback en contexto real</td><td>Multiplicar puntos de entrada al tema</td></tr>
+      <tr><td>Día del estreno</td><td>Anuncio oficial, video con el link, agradecimiento personalizado</td><td>Generar la mayor escucha concentrada posible</td></tr>
+      <tr><td>Semanas posteriores</td><td>Backstage, reacciones de oyentes, versiones alternativas</td><td>Mantener el tema vivo y construir comunidad</td></tr>
+    </tbody>
+  </table>
+
+  <div class="companion-banner">
+    <div class="companion-icon">📖</div>
+    <div class="companion-body">
+      <div class="companion-label">Ver en detalle en la Guía de Lanzamiento Exitoso</div>
+      <p class="companion-text">Los <strong>Días 3, 8, 9, 14, 15, 17 y 19</strong> de la Guía tienen el plan de contenido día por día. Este capítulo te da la base estratégica — la guía te da la ejecución táctica.</p>
+    </div>
+  </div>
+
+  <h3>Checklist de formatos</h3>
+  <ul class="checklist" id="cl7">
+    <li><span class="check-box">✓</span>Tengo al menos 3 formatos diferentes que uso habitualmente</li>
+    <li><span class="check-box">✓</span>Grabo contenido durante el proceso de crear música — no solo cuando está terminada</li>
+    <li><span class="check-box">✓</span>Tengo material de playback, versión acústica y selfie para cada lanzamiento</li>
+    <li><span class="check-box">✓</span>Varío los formatos — no publico lo mismo todos los días</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 8 -->
+<div class="chapter" id="cap8">
+  <div class="ch-label">Capítulo 08 · Dónde publicarlo</div>
+  <h2>Plataformas:<br>el rol de cada una</h2>
+
+  <p>Te recomiendo siempre publicar lo mismo en todas las plataformas, variando los días. Cada una tiene su propio lenguaje, su propio algoritmo y su propio tipo de usuario — el contenido que no pega en una puede viralizarse en otra.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">No estás en todas las plataformas para tener más seguidores — estás para llevar a la gente a Spotify. Cada plataforma es un canal con un rol específico en ese camino.</div>
+    <span class="rule-label">Principio #7</span>
+  </div>
+
+  <div class="platform-grid">
+    <div class="platform-item">
+      <div class="platform-icon">🎵</div>
+      <div class="platform-tag">Tu norte</div>
+      <div class="platform-name">Spotify</div>
+      <div class="platform-role">La métrica real. No importa cuántos followers tenés si nadie guarda tus canciones. Optimizá tu perfil, hacé pitch de cada lanzamiento, y revisá Spotify for Artists para entender qué está funcionando.</div>
+    </div>
+    <div class="platform-item">
+      <div class="platform-icon">📱</div>
+      <div class="platform-tag">Comunidad</div>
+      <div class="platform-name">Instagram</div>
+      <div class="platform-role">Tu casa. Reels para exposición, historias para conexión diaria. Mínimo 3 reels + 2 historias por semana.<br><br><strong>⚠️ Cuenta nueva vs. cuenta personal:</strong> Si tu cuenta ya tiene seguidores que no son tu oyente ideal, empezar una cuenta nueva muchas veces es la mejor opción. Instagram le muestra tu contenido primero a quienes ya te siguen — si no reaccionan, el algoritmo penaliza el alcance.</div>
+    </div>
+    <div class="platform-item">
+      <div class="platform-icon">🎬</div>
+      <div class="platform-tag">Viralidad</div>
+      <div class="platform-name">TikTok</div>
+      <div class="platform-role">El motor de descubrimiento más potente. El alcance es orgánico desde el principio. Lo crudo y real funciona mejor que lo pulido. Constancia mínima: 3 videos semanales.<br><br><strong>Clave:</strong> TikTok sigue mostrando los videos aunque tengas pocos seguidores. No abandones la plataforma si los primeros videos no explotan — un video viejo puede encontrar su audiencia meses después.</div>
+    </div>
+    <div class="platform-item">
+      <div class="platform-icon">▶️</div>
+      <div class="platform-tag">Profundidad</div>
+      <div class="platform-name">YouTube</div>
+      <div class="platform-role">Para el oyente que ya te conoce y quiere más. Videos más largos, behind the scenes, vlogs de estudio. También es una plataforma de búsqueda — los títulos con palabras clave importan. Shorts para exposición, videos largos para comunidad.</div>
+    </div>
+  </div>
+
+  <h3>La regla del triple alcance: IG + TikTok + YouTube Shorts</h3>
+
+  <p>Una de las estrategias más inteligentes y menos usadas por artistas independientes: <strong>subir cada reel o TikTok también como YouTube Short</strong>. Tres plataformas, tres algoritmos, tres audiencias distintas — y el mismo video puede explotar en una aunque no haya funcionado en las otras dos.</p>
+
+  <div class="companion-banner">
+    <div class="companion-icon">💡</div>
+    <div class="companion-body">
+      <div class="companion-label">Por qué es más importante de lo que parece</div>
+      <p class="companion-text">Es muy común que un video no funcione en Instagram pero sí en TikTok — o que explote en YouTube Shorts meses después. <strong>Nunca sabés en cuál de las tres va a encontrar su audiencia.</strong> El costo de subir el mismo video a las tres plataformas es mínimo. El beneficio potencial es enorme. Hacelo sistemáticamente con cada pieza de contenido.</p>
+    </div>
+  </div>
+
+  <h3>Cómo priorizar si recién empezás</h3>
+
+  <div class="funnel">
+    <div class="funnel-step"><div class="funnel-num">1°</div><div><div class="funnel-title">Instagram + Spotify for Artists</div><div class="funnel-desc">Construí tu base y aprendé a leer métricas. Esto nunca para — Instagram es tu operación central y Spotify es tu métrica de verdad.</div></div></div>
+    <div class="funnel-step"><div class="funnel-num">2°</div><div><div class="funnel-title">TikTok</div><div class="funnel-desc">Cuando tengas una rutina de contenido en Instagram, sumá TikTok. Podés reutilizar muchos de los mismos videos — pero adaptá el estilo al lenguaje de la plataforma.</div></div></div>
+    <div class="funnel-step"><div class="funnel-num">3°</div><div><div class="funnel-title">YouTube</div><div class="funnel-desc">Empezá con Shorts (reutilizando reels) y de a poco sumá videos más largos. Es la inversión de más largo plazo pero la más duradera.</div></div></div>
+  </div>
+
+  <h3>Checklist de plataformas</h3>
+  <ul class="checklist" id="cl8">
+    <li><span class="check-box">✓</span>Tengo Spotify for Artists configurado y reviso las métricas mínimo una vez por semana</li>
+    <li><span class="check-box">✓</span>Mi Instagram tiene un ritmo de publicación sostenido — no solo en época de lanzamiento</li>
+    <li><span class="check-box">✓</span>Evalué si mi cuenta de Instagram actual me está limitando por tener seguidores no ideales</li>
+    <li><span class="check-box">✓</span>No abandoné TikTok por bajo rendimiento inicial — seguí publicando con constancia</li>
+    <li><span class="check-box">✓</span>Subo cada video también como YouTube Short para maximizar el alcance en las tres plataformas</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 9 -->
+<div class="chapter" id="cap9">
+  <div class="ch-label">Capítulo 09 · El momento del lanzamiento</div>
+  <h2>El puente: de la marca<br>al lanzamiento</h2>
+
+  <p>Todo lo que construiste — posicionamiento, oyente ideal, pilares de contenido, embudo — converge en el momento del lanzamiento. Una marca sólida no solo hace que el lanzamiento sea más efectivo: hace que sea más fácil de ejecutar, porque la comunidad ya está ahí.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">Un lanzamiento no es "subir un tema". Es construir un momento alrededor de tu música. La marca es lo que hace que ese momento tenga audiencia cuando llega.</div>
+    <span class="rule-label">Principio #8</span>
+  </div>
+
+  <h3>Qué tiene que estar listo antes de lanzar</h3>
+
+  <div class="card-grid">
+    <div class="card"><div class="card-tag">Antes del Día 1</div><h4>Tu perfil en orden</h4><p>Bio actualizada, link funcional, Spotify for Artists verificado con foto y bio actualizadas.</p></div>
+    <div class="card"><div class="card-tag">Antes del Día 1</div><h4>Comunidad mínima activa</h4><p>No necesitás 10.000 seguidores — necesitás personas que ya te siguen y reaccionan a tu contenido.</p></div>
+    <div class="card"><div class="card-tag">Antes del Día 1</div><h4>Contenido de anticipación</h4><p>Al menos 2–3 semanas de contenido construyendo expectativa antes de anunciar la fecha.</p></div>
+    <div class="card"><div class="card-tag">Antes del Día 1</div><h4>Plan de contenido de 21 días</h4><p>Necesitás contenido planificado para las dos semanas posteriores al estreno — ahí se construye el momentum real.</p></div>
+  </div>
+
+  <div class="companion-banner">
+    <div class="companion-icon">🗺️</div>
+    <div class="companion-body">
+      <div class="companion-label">La Guía de Lanzamiento Exitoso — Tu hoja de ruta táctica</div>
+      <p class="companion-text">Este manual te da la estrategia de marca. La <strong>Guía de Lanzamiento Exitoso</strong> te da la táctica día por día: cómo subir el tema a plataformas, cómo hacer el pitch en Spotify, cómo estructurar las 3 semanas previas y las posteriores, y cómo analizar qué funcionó.</p>
+    </div>
+  </div>
+
+  <h3>Lo que cambia cuando la marca está sólida</h3>
+
+  <table class="info-table">
+    <thead><tr><th>Sin marca construida</th><th>Con marca construida</th></tr></thead>
+    <tbody>
+      <tr><td>El lanzamiento es la primera vez que la gente escucha de vos</td><td><strong>En el lanzamiento tu audiencia ya está preparada y seguro haya quien lo estaba esperando</strong></td></tr>
+      <tr><td>Dependés de publicidad paga para generar escuchas</td><td><strong>La primera ola de escuchas viene de la comunidad orgánica</strong></td></tr>
+      <tr><td>Después del lanzamiento, el tema desaparece</td><td><strong>Tenés contenido planificado para mantenerlo vivo semanas después</strong></td></tr>
+      <tr><td>Cada lanzamiento es empezar de cero</td><td><strong>Cada lanzamiento suma sobre lo construido anteriormente</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Checklist previo al lanzamiento</h3>
+  <ul class="checklist" id="cl9">
+    <li><span class="check-box">✓</span>Mi perfil está en orden antes de empezar el plan de lanzamiento</li>
+    <li><span class="check-box">✓</span>Publiqué contenido de anticipación al menos 2 semanas antes de anunciar la fecha</li>
+    <li><span class="check-box">✓</span>Tengo un plan de contenido para las 2 semanas posteriores al estreno</li>
+    <li><span class="check-box">✓</span>Tengo lista la Guía de Lanzamiento Exitoso para ejecutar el plan táctico</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 10 -->
+<div class="chapter" id="cap10">
+  <div class="ch-label">Capítulo 10 · Hacer plata de verdad</div>
+  <h2>Monetización para<br>artistas independientes</h2>
+
+  <p>Vivir de la música no se logra esperando que las streams alcancen. El streaming es parte del ecosistema — no el plan completo. Un artista independiente con marca sólida tiene múltiples fuentes de ingreso que se refuerzan entre sí.</p>
+
+  <div class="rule-box">
+    <div class="rule-text">La música es el producto. La marca es la empresa. Y como toda empresa, necesita más de una fuente de ingreso para ser sostenible.</div>
+    <span class="rule-label">Principio #9</span>
+  </div>
+
+  <h3>El mapa de monetización del artista independiente</h3>
+
+  <p style="font-size:13px;color:var(--fg-faint);margin-bottom:14px;font-style:italic;">Ordenado por nivel de audiencia — a medida que ganés números y autoridad, empezarán a desbloquearse estos niveles (muchas veces antes de lo que creés).</p>
+  <div class="money-ladder">
+    <div class="ladder-step"><div class="ladder-num">Nivel 1</div><div><div class="ladder-title">Streaming y distribución</div><div class="ladder-desc">Las regalías de Spotify, Apple Music, YouTube. Son bajas al principio pero crecen con el catálogo. La clave es construir catálogo — cada tema que sacás sigue generando mientras seguís creando.</div></div></div>
+    <div class="ladder-step"><div class="ladder-num">Nivel 2</div><div><div class="ladder-title">Shows y performances en vivo</div><div class="ladder-desc">La fuente de ingreso más inmediata cuando tenés comunidad local. Empezá con shows chicos, acumulá experiencia y resultados, y subí de nivel. La marca construye la demanda. <strong>Acá es donde está la mayor cantidad de dinero.</strong></div></div></div>
+    <div class="ladder-step"><div class="ladder-num">Nivel 3</div><div><div class="ladder-title">Sync licensing</div><div class="ladder-desc">Licenciar tu música para publicidades, series, podcasts, videos de YouTube. Una colocación en sync puede generar más que meses de streaming. Requiere tener los masters y derechos de publicación bien organizados.</div></div></div>
+    <div class="ladder-step"><div class="ladder-num">Nivel 4</div><div><div class="ladder-title">Enseñar lo que sabés</div><div class="ladder-desc">Clases 1:1, workshops, tutoriales de pago. Este nivel se construye sobre la marca personal: necesitás ser reconocido como alguien que sabe antes de que la gente pague por aprender de vos.</div></div></div>
+    <div class="ladder-step"><div class="ladder-num">Nivel 5</div><div><div class="ladder-title">Brand deals y colaboraciones pagas</div><div class="ladder-desc">Marcas de instrumentos, equipos de audio, lifestyle — todas buscan artistas con audiencias comprometidas. Un artista con 5.000 seguidores muy activos puede conseguir deals que otros con 50.000 pasivos no consiguen.</div></div></div>
+    <div class="ladder-step"><div class="ladder-num">Nivel 6</div><div><div class="ladder-title">Producción y colaboraciones para otros</div><div class="ladder-desc">Producir para otros artistas, escribir canciones, colaborar en proyectos. Muchos artistas financian su carrera propia produciendo para otros mientras su proyecto crece.</div></div></div>
+  </div>
+
+
+  <div class="catalog-section">
+    <h4>El catálogo como activo a largo plazo</h4>
+    <p>Una de las ideas más importantes del negocio musical independiente: tu catálogo es un activo que genera valor mientras dormís. Cada tema que sacás hoy sigue generando regalías en 5, 10, 20 años. Por eso la prioridad es construir catálogo — no esperar al hit perfecto para sacar algo.</p>
+
+    <h4>Matemática del catálogo</h4>
+    <p>Un tema que genera $50 por mes no parece mucho. Pero 20 temas que generan $50 por mes son <strong>$1.000 mensuales de regalías pasivas</strong> — sin contar shows, sync, ni nada más. El catálogo crece con el tiempo y los temas viejos pueden encontrar nueva audiencia en cualquier momento.</p>
+  </div>
+
+  <h3>Cuándo y cómo usar publicidad paga</h3>
+
+  <p>La publicidad paga no es para artistas que empiezan — es para artistas que ya tienen tracción orgánica y quieren amplificar lo que ya funciona. Si pagás publicidad antes de tener una estrategia de contenido sólida, estás llevando gente a un perfil que no los va a retener.</p>
+
+  <div class="ads-two-col">
+    <div class="ads-block">
+      <div class="ads-label no">❌ No sirve cuando...</div>
+      <p>Estás empezando y todavía no entendés qué contenido funciona orgánicamente. No tenés comunidad que reaccione. Tu perfil no está en orden. Querés inflar números en vez de construir oyentes reales.</p>
+    </div>
+    <div class="ads-block">
+      <div class="ads-label yes">✅ Sí sirve cuando...</div>
+      <p>Tenés un reel que funcionó bien orgánicamente y querés amplificarlo. Querés que tu audiencia existente sepa del lanzamiento. Tenés un show y querés llegar a más gente similar a la que ya te sigue.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio 10.1 — Tu mapa de monetización</div>
+    <h4>Respondé honestamente en qué nivel estás</h4>
+    <ul class="exercise-questions">
+      <li><div>¿Cuántos temas tenés publicados? ¿Cuánto genera cada uno por mes en regalías?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Hacés shows? ¿Con qué frecuencia y a qué tipo de venues accedés hoy?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Tenés los derechos de tus masters y de composición bien organizados?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>¿Hay algo que sabés hacer como músico por lo que otra persona pagaría para aprenderlo?</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+    </ul>
+  </div>
+
+  <h3>Checklist de monetización</h3>
+  <ul class="checklist" id="cl10">
+    <li><span class="check-box">✓</span>Sé cuántos temas tengo publicados y cuánto generan en regalías por mes</li>
+    <li><span class="check-box">✓</span>Tengo mis masters y derechos organizados</li>
+    <li><span class="check-box">✓</span>Identifiqué al menos 2 fuentes de ingresos reales más allá del streaming</li>
+    <li><span class="check-box">✓</span>Sé en qué nivel del mapa de monetización estoy hoy y cuál es el próximo paso</li>
+  </ul>
+</div>
+
+<!-- ═══════════ CAP 11 -->
+<div class="chapter" id="cap11">
+  <div class="ch-label">Capítulo 11 · El norte</div>
+  <h2>Las preguntas<br>que importan</h2>
+
+  <p>Estas tres preguntas no tienen respuesta correcta. Pero si las respondés honestamente, van a darle coherencia a todo lo que venga después.</p>
+
+  <div class="pending">
+    <div class="pending-icon">🎯</div>
+    <div class="pending-q">¿Por qué hacés música? — y no la respuesta bonita.</div>
+    <div class="pending-hint">La respuesta real, la que no suena bien en una entrevista pero que es verdad. Esa es la que va a aparecer en tu contenido, en tu forma de comunicarte y en la conexión que generás con tu audiencia.</div>
+  </div>
+
+  <div class="pending">
+    <div class="pending-icon">👥</div>
+    <div class="pending-q">¿Qué quiero que sienta alguien que escucha mi música por primera vez?</div>
+    <div class="pending-hint">No "que le guste" — eso es demasiado vago. Una emoción específica, un estado de ánimo. Eso define tu sonido, tu estética visual, tus colaboraciones y cómo describís tu música en cada pitch.</div>
+  </div>
+
+  <div class="pending">
+    <div class="pending-icon">🏗️</div>
+    <div class="pending-q">¿Qué tipo de artista querés ser en 5 años — y qué rol tiene tu música en eso?</div>
+    <div class="pending-hint">No "tener un hit" — ¿qué comunidad construiste? ¿qué sonido desarrollaste? ¿en qué escenarios o plataformas estás? ¿qué impacto tiene tu música en quien la escucha? Tenerlo claro hace que cada decisión hoy tenga sentido.</div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-label">✏️ Ejercicio final — Declaración de intención</div>
+    <h4>Escribí en no más de 5 oraciones</h4>
+    <ul class="exercise-questions">
+      <li><div>Quién soy como artista y qué tipo de música hago (específico).</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>A quién le hablo y en qué momento de su vida mi música encuentra su lugar.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Qué tengo yo que ningún otro artista de mi nicho tiene exactamente igual.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Por qué empecé — la historia real, sin romantizar.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+      <li><div>Qué quiero que sea diferente en la vida de quien escucha mi música.</div><textarea class="answer-box" placeholder="Tu respuesta..." rows="2"></textarea></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="rule-box">
+    <div class="rule-text">Tenés todo lo que necesitás. Lo único que separa donde estás de donde querés estar es ejecutar — publicar, lanzar, fallar, ajustar y volver a publicar. La carrera se construye en la repetición, no en el momento perfecto.</div>
+    <span class="rule-label">Principio final</span>
+  </div>
+
+  <h3>El checklist maestro</h3>
+  <ul class="checklist" id="cl-final">
+    <li><span class="check-box">✓</span>Tengo claro mi micro-nicho y puedo describirlo en dos oraciones</li>
+    <li><span class="check-box">✓</span>Sé quién es mi oyente ideal y qué necesita de mi música</li>
+    <li><span class="check-box">✓</span>Mi perfil en Instagram y en Spotify está en orden</li>
+    <li><span class="check-box">✓</span>Tengo los tres pilares de contenido definidos y un banco de ideas</li>
+    <li><span class="check-box">✓</span>Entendí cómo funciona el embudo musical y qué tipo de contenido va en cada nivel</li>
+    <li><span class="check-box">✓</span>Sé qué rol cumple cada plataforma y no publico lo mismo en todas</li>
+    <li><span class="check-box">✓</span>Construyo comunidad entre lanzamientos — no solo cuando tengo un tema nuevo</li>
+    <li><span class="check-box">✓</span>Tengo la Guía de Lanzamiento Exitoso lista para ejecutar el próximo lanzamiento</li>
+    <li><span class="check-box">✓</span>Sé en qué nivel del mapa de monetización estoy y cuál es el próximo paso</li>
+    <li><span class="check-box">✓</span>Respondí las tres preguntas del capítulo 11 con honestidad</li>
+  </ul>
+</div>
+
+<!-- ═══════════ FOOTER -->
+<footer>
+  <img src="data:image/png;base64,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AiIgIiICIiAiIgIiICIiAiIgkfY3c+o2/wBXWiqusVbeNOUVYat9pFU5sQnLeVtQ1meQyM6EZHl3HQiXuMbiCsG4ml7VpXQ9VVSW6R4q7o+WB0RLmgeHDg98ElxxkZDcE4VWkQEREBERAREQEREBERAREQEREBdppXT171VfqWxadttRcrlVO5YaeFuXH1J8gB3JOAB1JC6tXd9nhTTO01W11t0nQ08Iq5Ke536er556khjXR08UQGWNbzsc5xOD6En4A6raTgxq47tSXLcm8UclFH+kktdue8ulPkx8pAwPXlyfIOHdXGtNuoLRbKe2Wujp6KipoxHBTwRhkcbR2DWjoAuUiAiL8cQ1pc4gADJJ8kH6uDf7zadP2me7Xu40tuoKdvNLUVMoYxg+ZP8Al5qBt8OKvReiBPatLeFqm+sy0iGT+6QO7fHIPvEfssz6EtVIN0tzta7l3b7Q1ZeZaprHEwUjPgp6cHyZGOg6dMnLjjqSgsxvlxilwnsu1VMWjqx17rIuv1hid/4nj+XzVQr5drnfLrUXW83CquFfUO55qiplMkjz83HqVwkQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERB3eh9KX7WupqTTmmrfJX3KqJEcTSAAAMlznHo1oHUkrTLho26l2w2lt+m60Qm6Plkqri+J/Mx0zzjocDoGNY3+VRP7PKttFft9XxU+laekuVtl8CpvLaaNjqxr3Oe2IyD4nFgxkHoMsVo0BFFnEVvRYtotMePP4ddf6thFutwd1ee3iSY6tjB7nuT0HmRQIb6brs1ZcdTw60uMVxuEToJiC10TI3EHljjcC2PGBgtAI8jknIXn3p4k9A7ZXgWOobWXu7hpM1NbyxzaY+TZXucA1xP6oyQOpA6ZppvbxFa+3MdNQOqvsOwPJAttE8gSN9JZOhk+nRv7qh+ommqaiSoqJZJppXl8kkji5z3E5JJPUknzXzQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREF6dA7q6S4edu9G6L1FaK4VdysLr7Vvpmh0gnmeSyN7TjqQC3Ofh5GgjHUe03c4ldOaJ0BQVsUMU+r7lb4qiOyeL4hoZJGBxFQ4Y5Qwkgt6OcR0ABJFQ+LbU9q1buParraZJ3RO05b/EbK0jw3ui8TlGfINkb+OVGusdRXPVmp6/Ud6lZLcK+Xxah7GBgc7AGcDoOyD6a31VfdaanrNR6jr5K641b+aSR3Zo8mtHZrQOgA6ALpERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREH//Z" alt="Larry">
+  Manual de Marca Personal · Artistas Independientes · Vol. 1 · bylarryprod@gmail.com · @larry.prod
+</footer>
+
+<script>
+  const chapters = document.querySelectorAll('.chapter');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.04 });
+  chapters.forEach(c => io.observe(c));
+
+  window.addEventListener('scroll', () => {
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / total) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  });
+
+  document.querySelectorAll('.checklist li').forEach(li => {
+    li.addEventListener('click', () => li.classList.toggle('checked'));
+  });
+
+  // ── DESCARGAR RESPUESTAS ───────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+  const dlBtn = document.getElementById('downloadBtn');
+  if (!dlBtn) return;
+  dlBtn.addEventListener('click', () => {
+    const exercises = document.querySelectorAll('.exercise');
+    let hayRespuestas = false;
+    let bloques = [];
+
+    exercises.forEach(ex => {
+      const label = ex.querySelector('.exercise-label')?.textContent.trim() || '';
+      const items = ex.querySelectorAll('.exercise-questions li');
+      let preguntas = [];
+      items.forEach(li => {
+        const pregunta = li.querySelector('div')?.textContent.trim() || '';
+        const respuesta = li.querySelector('.answer-box')?.value.trim() || '';
+        if (respuesta) hayRespuestas = true;
+        preguntas.push({ pregunta, respuesta });
+      });
+      if (preguntas.length) bloques.push({ label, preguntas });
+    });
+
+    if (!hayRespuestas) {
+      alert('Todavía no escribiste ninguna respuesta.');
+      return;
+    }
+
+    // Fecha actual
+    const fecha = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    // Construir HTML para la ventana de impresión
+    let rows = '';
+    bloques.forEach(b => {
+      const tieneRespuesta = b.preguntas.some(p => p.respuesta);
+      if (!tieneRespuesta) return;
+      rows += `<div class="bloque">
+        <div class="bloque-title">${b.label}</div>`;
+      b.preguntas.forEach(p => {
+        const respClass = p.respuesta ? '' : ' vacio';
+        const respTexto = p.respuesta || '<span class="sin-resp">Sin respuesta</span>';
+        rows += `<div class="pregunta${respClass}">
+          <div class="q">${p.pregunta}</div>
+          <div class="a">${p.respuesta ? p.respuesta.replace(/\n/g, '<br>') : '<span class="sin-resp">Sin respuesta</span>'}</div>
+        </div>`;
+      });
+      rows += `</div>`;
+    });
+
+    const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mis respuestas — Manual de Marca</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: #fff;
+    color: #111;
+    padding: 48px 52px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .header { border-bottom: 3px solid #111; padding-bottom: 20px; margin-bottom: 36px; }
+  .header-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #555;
+    margin-top: 8px;
+  }
+  .header-sub strong { color: #111; }
+  .bloque {
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .bloque:last-child { border-bottom: none; }
+  .bloque-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 18px;
+    padding: 6px 10px;
+    background: #f5f5f5;
+    border-left: 3px solid #c9a85c;
+  }
+  .pregunta { margin-bottom: 18px; }
+  .pregunta.vacio { opacity: 0.4; }
+  .q {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .a {
+    font-size: 14px;
+    font-weight: 400;
+    color: #111;
+    line-height: 1.7;
+    padding: 10px 14px;
+    background: #fafafa;
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .sin-resp { color: #bbb; font-style: italic; }
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    font-size: 12px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+  }
+  .print-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #111;
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    z-index: 999;
+  }
+  .print-bar span { font-size: 12px; color: #aaa; letter-spacing: .04em; }
+  .btn-print {
+    background: #c9a85c;
+    color: #111;
+    border: none;
+    padding: 10px 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .btn-print:hover { background: #d4b870; }
+  @media print {
+    .print-bar { display: none; }
+    body { padding: 24px 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-tag">@larry.prod — Manual de Marca Personal</div>
+  <div class="header-title">Mis respuestas</div>
+  <div class="header-sub">Completado el <strong>${fecha}</strong></div>
+</div>
+${rows}
+<div class="footer">
+  <span>Manual de Marca Personal — @larry.prod</span>
+  <span>${fecha}</span>
+</div>
+<div class="print-bar">
+  <span>Guardá este documento como PDF desde tu navegador</span>
+  <button class="btn-print" onclick="window.print()">⬇ Guardar como PDF</button>
+</div>
+</body>
+</html>`;
+
+    const ventana = window.open('', '_blank');
+    ventana.document.write(html);
+    ventana.document.close();
+  });
+  }); // fin DOMContentLoaded
+</script>
+
+<!-- Botón flotante descargar -->
+<button id="downloadBtn" title="Descargar mis respuestas" style="
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 998;
+  background: #c9a85c;
+  color: #0e0e0e;
+  border: none;
+  border-radius: 3px;
+  padding: 13px 22px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  opacity: 1;
+  transition: background .2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  Descargar respuestas
+</button>
+</body>
+</html>
