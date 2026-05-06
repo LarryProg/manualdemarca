@@ -2120,6 +2120,63 @@ ${rows}
   }); // fin DOMContentLoaded
 </script>
 
+<!-- ── PERSISTENCIA localStorage ──────────────────────────────────────── -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    // ── RESPUESTAS (answer-box) ──────────────────────────────────────────
+    const boxes = document.querySelectorAll('.answer-box');
+    boxes.forEach((box, i) => {
+      const key = 'mm_answer_' + i;
+      const saved = localStorage.getItem(key);
+      if (saved !== null) box.value = saved;
+      box.addEventListener('input', () => localStorage.setItem(key, box.value));
+    });
+
+    // ── CHECKLISTS ───────────────────────────────────────────────────────
+    const items = document.querySelectorAll('.checklist li');
+    items.forEach((li, i) => {
+      const key = 'mm_check_' + i;
+      // Restaurar estado guardado
+      if (localStorage.getItem(key) === '1') li.classList.add('checked');
+      // Guardar al hacer click (después de que el toggle original actúe)
+      li.addEventListener('click', () => {
+        setTimeout(() => {
+          localStorage.setItem(key, li.classList.contains('checked') ? '1' : '0');
+        }, 0);
+      });
+    });
+
+    // ── INDICADOR DE AUTO-GUARDADO ───────────────────────────────────────
+    // Muestra un toast brevemente cuando se guarda
+    const toast = document.createElement('div');
+    toast.id = 'save-toast';
+    toast.textContent = '✓ Guardado';
+    toast.style.cssText = `
+      position: fixed; bottom: 80px; right: 28px; z-index: 9999;
+      background: #1a1a1a; color: rgba(240,237,230,0.7);
+      border: 1px solid rgba(240,237,230,0.12);
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 2px;
+      opacity: 0; transition: opacity 0.3s ease;
+      pointer-events: none;
+    `;
+    document.body.appendChild(toast);
+
+    let toastTimer;
+    function showToast() {
+      clearTimeout(toastTimer);
+      toast.style.opacity = '1';
+      toastTimer = setTimeout(() => { toast.style.opacity = '0'; }, 1400);
+    }
+
+    boxes.forEach(box => box.addEventListener('input', showToast));
+    items.forEach(li => li.addEventListener('click', showToast));
+
+  });
+</script>
+
 <!-- Botón flotante descargar -->
 <button id="downloadBtn" title="Descargar mis respuestas" style="
   position: fixed;
